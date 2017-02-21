@@ -5,26 +5,10 @@ public class CornerMarker : MonoBehaviour
     public GameObject markerPrefab;
     public MeshFilter target;
 
-    private Vector3[] GetCorners(Bounds bounds)
-    {
-        var C = bounds.center;
-        var E = bounds.extents;
-        return new Vector3[8] {
-            C + new Vector3(+E.x, +E.y, +E.z),
-            C + new Vector3(+E.x, +E.y, -E.z),
-            C + new Vector3(+E.x, -E.y, +E.z),
-            C + new Vector3(+E.x, -E.y, -E.z),
-            C + new Vector3(-E.x, +E.y, +E.z),
-            C + new Vector3(-E.x, +E.y, -E.z),
-            C + new Vector3(-E.x, -E.y, +E.z),
-            C + new Vector3(-E.x, -E.y, -E.z)
-        };
-    }
-
     public void CreateMarkers()
     {
         var bounds = target.sharedMesh.bounds;
-        foreach (var p in GetCorners(bounds))
+        foreach (var p in bounds.GetCorners())
             Detach(CreateLocalMarker(p));
     }
 
