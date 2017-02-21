@@ -32,19 +32,18 @@ public class LeftBottomPointFinder : MonoBehaviour
 
     private void CreateMarkers()
     {
-        List<Vector3> points = new List<Vector3>();
+        Vector3 leftBottom = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 
         var bounds = target.sharedMesh.bounds;
-        var matrix = target.transform.localToWorldMatrix;
-        foreach (var p in bounds.GetCorners())
+        var localToWorld = target.transform.localToWorldMatrix;
+        foreach (var localPos in bounds.GetCorners())
         {
-            points.Add(matrix.MultiplyPoint(p));
+            var worldPos = localToWorld.MultiplyPoint(localPos);
+            if (Vector3LexicalCompare(worldPos, leftBottom) < 0)
+                leftBottom = worldPos;
         }
 
-        points.Sort(Vector3Compare);
-        points.RemoveRange(1, points.Count - 1);
-        var markerPosition = points.First();
-        CreateMarker(markerPosition);
+        CreateMarker(leftBottom);
     }
 
     private GameObject CreateMarker(Vector3 position)
