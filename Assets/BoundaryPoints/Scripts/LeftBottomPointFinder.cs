@@ -20,11 +20,6 @@ public class LeftBottomPointFinder : MonoBehaviour
         return 0;
     }
 
-    private static int Vector3Compare(Vector3 a, Vector3 b)
-    {
-        return Vector3LexicalCompare(a, b);
-    }
-
     private void Start()
     {
         CreateMarkers();
