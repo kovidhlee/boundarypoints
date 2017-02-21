@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,22 +7,22 @@ public class LeftBottomPointFinder : MonoBehaviour
     public GameObject markerPrefab;
     public MeshFilter target;
 
-    private static int Vector3Compare(Vector3 a, Vector3 b)
+    private static int Vector3LexicalCompare(Vector3 a, Vector3 b)
     {
         var delta = a - b;
-        if (delta.x < 0)
-            return -1;
-        if (delta.x > 0)
-            return 1;
-        if (delta.y < 0)
-            return -1;
-        if (delta.y > 0)
-            return 1;
-        if (delta.z < 0)
-            return -1;
-        if (delta.z > 0)
-            return 1;
+        for (int i = 0; i < 3; i++)
+        {
+            if (delta[i] < 0)
+                return -1;
+            if (delta[i] > 0)
+                return 1;
+        }
         return 0;
+    }
+
+    private static int Vector3Compare(Vector3 a, Vector3 b)
+    {
+        return Vector3LexicalCompare(a, b);
     }
 
     private void Start()
