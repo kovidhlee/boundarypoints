@@ -20,10 +20,10 @@ public class LeftBottomPointFinder : MonoBehaviour
 
     private void Start()
     {
-        CreateMarkers();
+        MarkLeftBottomPoint();
     }
 
-    private void CreateMarkers()
+    private void MarkLeftBottomPoint()
     {
         Vector3 leftBottom = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
 
