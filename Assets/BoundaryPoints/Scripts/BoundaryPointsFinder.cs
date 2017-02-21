@@ -2,10 +2,10 @@
 
 public class BoundaryPointsFinder : MonoBehaviour
 {
-    public GameObject prefab;
+    public GameObject markerPrefab;
     public MeshFilter target;
 
-    private Vector3[] BoundaryPoints(Bounds bounds)
+    private Vector3[] GetCorners(Bounds bounds)
     {
         var C = bounds.center;
         var E = bounds.extents;
@@ -21,11 +21,11 @@ public class BoundaryPointsFinder : MonoBehaviour
         };
     }
 
-    public void FindPoints()
+    public void CreateMarkers()
     {
         var bounds = target.sharedMesh.bounds;
-        foreach (var p in BoundaryPoints(bounds))
-            Detach(CreateLocalPoint(p));
+        foreach (var p in GetCorners(bounds))
+            Detach(CreateLocalMarker(p));
     }
 
     private void Detach(GameObject obj)
@@ -33,9 +33,9 @@ public class BoundaryPointsFinder : MonoBehaviour
         obj.transform.SetParent(null);
     }
 
-    private GameObject CreateLocalPoint(Vector3 localPosition)
+    private GameObject CreateLocalMarker(Vector3 localPosition)
     {
-        var instance = Instantiate(prefab);
+        var instance = Instantiate(markerPrefab);
         instance.transform.SetParent(target.transform);
         instance.transform.localPosition = localPosition;
         return instance;

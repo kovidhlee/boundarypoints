@@ -112,7 +112,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 35c0d59614dba51438ccf66b4739b4f6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefab: {fileID: 104632, guid: 8e95fcdd5d729e646b88152c6e1f745b, type: 2}
+  markerPrefab: {fileID: 104632, guid: 8e95fcdd5d729e646b88152c6e1f745b, type: 2}
   target: {fileID: 1553454432}
 --- !u!4 &436014121
 Transform:
@@ -687,7 +687,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 436014120}
-        m_MethodName: FindPoints
+        m_MethodName: CreateMarkers
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
