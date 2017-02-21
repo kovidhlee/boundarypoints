@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BoundaryPointsFinder : MonoBehaviour
+public class CornerMarker : MonoBehaviour
 {
     public GameObject markerPrefab;
     public MeshFilter target;
