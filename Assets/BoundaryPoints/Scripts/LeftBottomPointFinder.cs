@@ -1,13 +1,18 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
 
 public class LeftBottomPointFinder : MonoBehaviour
 {
     public GameObject markerPrefab;
     public MeshFilter target;
+    public Vector3 ComparisonBasis = Vector3.one;
 
-    private static int Vector3LexicalCompare(Vector3 a, Vector3 b)
+    private int Vector3LexicalCompare(Vector3 a, Vector3 b)
     {
         var delta = a - b;
+        delta.Scale(ComparisonBasis);
+
         for (int i = 0; i < 3; i++)
         {
             if (delta[i] < 0)
@@ -25,18 +30,16 @@ public class LeftBottomPointFinder : MonoBehaviour
 
     private void MarkLeftBottomPoint()
     {
-        Vector3 leftBottom = new Vector3(float.MaxValue, float.MaxValue, float.MaxValue);
-
+        var positions = new List<Vector3>();
         var bounds = target.sharedMesh.bounds;
         var localToWorld = target.transform.localToWorldMatrix;
         foreach (var localPos in bounds.GetCorners())
         {
             var worldPos = localToWorld.MultiplyPoint(localPos);
-            if (Vector3LexicalCompare(worldPos, leftBottom) < 0)
-                leftBottom = worldPos;
+            positions.Add(worldPos);
         }
-
-        CreateMarker(leftBottom);
+        positions.Sort(Vector3LexicalCompare);
+        CreateMarker(positions.First());
     }
 
     private GameObject CreateMarker(Vector3 position)
