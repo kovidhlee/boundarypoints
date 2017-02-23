@@ -6,9 +6,14 @@ public class BoxColliderEncapsulatorEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        var encapsulator = (BoxColliderEncapsulator)target;
         if (GUILayout.Button("Encapsulate Children"))
         {
-            ((BoxColliderEncapsulator)target).Encapsulate();
+            (encapsulator).Encapsulate();
+        }
+        if (GUILayout.Button("Reset"))
+        {
+            encapsulator.Reset();
         }
     }
 }

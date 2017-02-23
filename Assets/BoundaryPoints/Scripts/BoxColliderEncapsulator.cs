@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 [ExecuteInEditMode]
@@ -21,5 +22,11 @@ public class BoxColliderEncapsulator : MonoBehaviour
         var worldToLocal = transform.worldToLocalMatrix;
         parentCollider.center = worldToLocal.MultiplyPoint(bigBounds.center);
         parentCollider.size = worldToLocal.MultiplyVector(bigBounds.size);
+    }
+
+    public void Reset()
+    {
+        BoxCollider.center = Vector3.zero;
+        BoxCollider.size = Vector3.one;
     }
 }
