@@ -6,6 +6,8 @@ public class LeftBottomPointFinder : MonoBehaviour
 {
     private interface IStrategy
     {
+        Vector3 GetMarkerPosition(int i);
+
         Bounds GetBounds();
 
         Vector3 ToWorldPosition(Vector3 pos);
@@ -28,6 +30,13 @@ public class LeftBottomPointFinder : MonoBehaviour
         protected Transform transform
         {
             get { return _gameObject.transform; }
+        }
+
+        public Vector3 GetMarkerPosition(int i)
+        {
+            var bounds = GetBounds();
+            var corners = bounds.GetCorners();
+            return ToWorldPosition(corners[i]);
         }
 
         public abstract Bounds GetBounds();
@@ -102,15 +111,8 @@ public class LeftBottomPointFinder : MonoBehaviour
 
     private void MarkLeftBottomPoint()
     {
-        Vector3 pos = GetMarkerPosition((int)corner);
+        Vector3 pos = _strategy.GetMarkerPosition((int)corner);
         CreateMarker(pos);
-    }
-
-    private Vector3 GetMarkerPosition(int i)
-    {
-        var bounds = _strategy.GetBounds();
-        var corners = bounds.GetCorners();
-        return _strategy.ToWorldPosition(corners[i]);
     }
 
     private GameObject CreateMarker(Vector3 position)
