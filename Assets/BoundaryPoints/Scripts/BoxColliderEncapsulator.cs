@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(BoxCollider))]
 [ExecuteInEditMode]
@@ -11,8 +12,15 @@ public class BoxColliderEncapsulator : MonoBehaviour
 
     public void Encapsulate()
     {
-        var colliders = GetComponentsInChildren<Collider>();
-        var bigBounds = BoxCollider.bounds;
+        var colliders = GetComponentsInChildren<Collider>().ToList();
+        colliders.Remove(BoxCollider);
+        if (colliders.Count == 0)
+        {
+            Debug.Log("There is no child has collider.");
+            return;
+        }
+
+        var bigBounds = colliders.First().bounds;
         foreach (var c in colliders)
         {
             bigBounds.Encapsulate(c.bounds);
