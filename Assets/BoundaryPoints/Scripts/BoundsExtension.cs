@@ -1,5 +1,17 @@
 ﻿using UnityEngine;
 
+public enum CubeCorner
+{
+    RightTopFar,
+    RightTopNear,
+    RightBottomFar,
+    RightBottomNear,
+    LeftTopFar,
+    LeftTopNear,
+    LeftBottomFar,
+    LeftBottomNear,
+}
+
 public static class BoundsExtension
 {
     public static Vector3[] GetCorners(this Bounds bounds)

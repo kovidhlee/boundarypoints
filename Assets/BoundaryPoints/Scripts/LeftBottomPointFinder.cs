@@ -2,25 +2,15 @@
 using System.Linq;
 using UnityEngine;
 
+[RequireComponent(typeof(MeshFilter))]
 public class LeftBottomPointFinder : MonoBehaviour
 {
     public GameObject markerPrefab;
-    public MeshFilter target;
-    public Vector3 ComparisonBasis = Vector3.one;
+    public CubeCorner WhichCorner = CubeCorner.RightTopFar;
 
-    private int Vector3LexicalCompare(Vector3 a, Vector3 b)
+    public MeshFilter target
     {
-        var delta = a - b;
-        delta.Scale(ComparisonBasis);
-
-        for (int i = 0; i < 3; i++)
-        {
-            if (delta[i] < 0)
-                return -1;
-            if (delta[i] > 0)
-                return 1;
-        }
-        return 0;
+        get { return GetComponent<MeshFilter>(); }
     }
 
     private void Start()
@@ -38,8 +28,7 @@ public class LeftBottomPointFinder : MonoBehaviour
             var worldPos = localToWorld.MultiplyPoint(localPos);
             positions.Add(worldPos);
         }
-        positions.Sort(Vector3LexicalCompare);
-        CreateMarker(positions.First());
+        CreateMarker(positions[(int)WhichCorner]);
     }
 
     private GameObject CreateMarker(Vector3 position)
