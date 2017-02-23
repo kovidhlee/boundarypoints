@@ -6,17 +6,13 @@ public class LeftBottomPointFinder : MonoBehaviour
     private interface IStrategy
     {
         Vector3 GetMarkerPosition(int i);
-
-        Bounds GetBounds();
-
-        Vector3 ToWorldPosition(Vector3 pos);
     }
 
     private abstract class Strategy : IStrategy
     {
         private GameObject _gameObject;
 
-        public Strategy(GameObject gameObject)
+        protected Strategy(GameObject gameObject)
         {
             _gameObject = gameObject;
         }
@@ -38,9 +34,9 @@ public class LeftBottomPointFinder : MonoBehaviour
             return ToWorldPosition(corners[i]);
         }
 
-        public abstract Bounds GetBounds();
+        protected abstract Bounds GetBounds();
 
-        public abstract Vector3 ToWorldPosition(Vector3 pos);
+        protected abstract Vector3 ToWorldPosition(Vector3 pos);
     }
 
     private class AccessMesh : Strategy
@@ -49,12 +45,12 @@ public class LeftBottomPointFinder : MonoBehaviour
         {
         }
 
-        public override Bounds GetBounds()
+        protected override Bounds GetBounds()
         {
             return GetComponent<MeshFilter>().sharedMesh.bounds;
         }
 
-        public override Vector3 ToWorldPosition(Vector3 pos)
+        protected override Vector3 ToWorldPosition(Vector3 pos)
         {
             return transform.localToWorldMatrix.MultiplyPoint(pos);
         }
@@ -66,12 +62,12 @@ public class LeftBottomPointFinder : MonoBehaviour
         {
         }
 
-        public override Bounds GetBounds()
+        protected override Bounds GetBounds()
         {
             return GetComponent<Collider>().bounds;
         }
 
-        public override Vector3 ToWorldPosition(Vector3 pos)
+        protected override Vector3 ToWorldPosition(Vector3 pos)
         {
             return pos;
         }
