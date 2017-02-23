@@ -102,11 +102,15 @@ public class LeftBottomPointFinder : MonoBehaviour
 
     private void MarkLeftBottomPoint()
     {
+        Vector3 pos = GetMarkerPosition((int)corner);
+        CreateMarker(pos);
+    }
+
+    private Vector3 GetMarkerPosition(int i)
+    {
         var bounds = _strategy.GetBounds();
         var corners = bounds.GetCorners();
-        var i = (int)corner;
-        var pos = _strategy.ToWorldPosition(corners[i]);
-        CreateMarker(pos);
+        return _strategy.ToWorldPosition(corners[i]);
     }
 
     private GameObject CreateMarker(Vector3 position)
